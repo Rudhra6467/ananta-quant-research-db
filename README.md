@@ -25,18 +25,20 @@ Current score is a **projection**. Historical evidence is never overwritten.
 
 Live 5-minute evaluation may query only operational projections. It must not scan raw candles, feature history, or experiment archives.
 
-## Phase 0 status
+## Current status
 
-Phase 0 is the foundation gate.
+Phase 0: schema foundation.  
+Phase 1: in-memory BTC 1h **fixture lifecycle** (`research_db/lifecycle`, `docs/PHASE1.md`).
 
 Allowed now:
 
-- schemas, identities, lineage, definition stubs
-- append-only evidence stubs
-- current-state projection stubs
-- architecture document and completion tests
+- schemas and identity stubs
+- deterministic fixture (not an exchange feed)
+- requested-feature observations only
+- append-only evidence and rank snapshots on the fixture
+- operational-table live decision on the fixture
 
-Forbidden until a later phase is explicitly approved:
+Forbidden:
 
 - full historical ingestion
 - combinatorial feature materialization
@@ -44,16 +46,20 @@ Forbidden until a later phase is explicitly approved:
 - live capital
 - treating Ananta regime labels as ground truth
 
-See `docs/EMPIRICAL_MEMORY_ARCHITECTURE_V1.md` and `docs/PHASES.md`.
+See `docs/EMPIRICAL_MEMORY_ARCHITECTURE_V1.md`, `docs/PHASES.md`, and `docs/PHASE1.md`.
 
 ## Layout
 
 ```
-docs/            architecture and phase gates
-research_db/     SQLAlchemy models and config
-alembic/         migrations
-sql/             readable Phase 0 DDL (same grain as migration)
-tests/           static contract tests (no live DB required)
+docs/                     architecture and phase gates
+research_db/models/        SQLAlchemy Phase 0 stubs
+research_db/lifecycle/     Phase 1 stdlib fixture engine
+alembic/                   migrations
+tests/                     contract + lifecycle tests
+```
+
+```bash
+python -m pytest
 ```
 
 ## Local bring-up (after Phase 0 approval to run Docker)

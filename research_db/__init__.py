@@ -1,5 +1,6 @@
-"""Ananta empirical memory models."""
+"""Ananta empirical memory package.
 
-from research_db.models import metadata
+ORM models require SQLAlchemy. The Phase 1 fixture lifecycle is stdlib-only.
+"""
 
-__all__ = ["metadata"]
+__all__: list[str] = []

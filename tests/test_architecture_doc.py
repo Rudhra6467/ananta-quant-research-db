@@ -25,5 +25,5 @@ def test_architecture_doc_exists_and_gates_ingestion() -> None:
 
 def test_phases_doc_has_phase0_gate() -> None:
     text = (ROOT / "docs" / "PHASES.md").read_text(encoding="utf-8")
-    assert "Phase 0 is **not** permission" in text
+    assert "full-history ingestion" in text
     assert "Forbidden" in text
