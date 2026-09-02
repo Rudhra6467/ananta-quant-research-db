@@ -1,7 +1,7 @@
 from sqlalchemy import MetaData
 from sqlalchemy.orm import DeclarativeBase
 
-SCHEMAS = ("ref", "raw", "core", "research", "analytics", "ops")
+SCHEMAS = ("ref", "raw", "core", "world", "market", "feature", "research", "analytics", "ops")
 
 naming = {
     "ix": "ix_%(column_0_label)s",
