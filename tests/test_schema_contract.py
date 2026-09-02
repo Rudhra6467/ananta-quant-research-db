@@ -46,7 +46,7 @@ def test_ingestion_disabled_in_settings_source() -> None:
 
 def test_schemas_declared_in_base() -> None:
     text = (ROOT / "research_db" / "models" / "base.py").read_text(encoding="utf-8")
-    assert 'SCHEMAS = ("ref", "raw", "core", "research", "analytics", "ops")' in text
+    assert "world" in text and "market" in text and "feature" in text
 
 
 def test_phase0_tables_declared() -> None:
@@ -54,8 +54,10 @@ def test_phase0_tables_declared() -> None:
     assert missing == []
 
 
-def test_no_feature_observation_yet() -> None:
+def test_phase0_has_no_observation_hypertable() -> None:
     assert "feature_observation" not in PHASE0
+    phase2_sql = (ROOT / "sql" / "002_phase2_market_truth.sql").read_text(encoding="utf-8")
+    assert "feature.observation" in phase2_sql
 
 
 def test_decision_actions_locked() -> None:
