@@ -1,0 +1,20 @@
+services:
+  timescaledb:
+    image: timescale/timescaledb:2.17.2-pg16
+    container_name: ananta-research-db
+    environment:
+      POSTGRES_USER: ananta
+      POSTGRES_PASSWORD: ananta
+      POSTGRES_DB: ananta_research
+    ports:
+      - "5432:5432"
+    volumes:
+      - ananta_research_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ananta -d ananta_research"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ananta_research_pgdata:
