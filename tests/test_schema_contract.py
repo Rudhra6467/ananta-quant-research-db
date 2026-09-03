@@ -47,6 +47,7 @@ def test_ingestion_disabled_in_settings_source() -> None:
 def test_schemas_declared_in_base() -> None:
     text = (ROOT / "research_db" / "models" / "base.py").read_text(encoding="utf-8")
     assert "world" in text and "market" in text and "feature" in text
+    assert "prediction" in text and "portfolio" in text
 
 
 def test_phase0_tables_declared() -> None:
