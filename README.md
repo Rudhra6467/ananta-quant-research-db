@@ -28,9 +28,9 @@ Live 5-minute evaluation may query only operational projections. It must not sca
 ## Current status
 
 Phase 0–1: merged to `main` (`24b6e72`).  
-Phase 2: persist that fixture into normalized market-truth tables (`docs/PHASE2.md`). Constitution: `docs/DATABASE_CONSTITUTION.md`.
+Phase 2–4: on `work` — fixture market truth, evidence, and request-driven observation engine. Constitution: `docs/DATABASE_CONSTITUTION.md`.
 
-Allowed now: schemas, deterministic fixture, requested RSI(12–17) observations, operational projections.
+Allowed now: schemas, deterministic fixture, requested RSI(12–17) observations, fixture evidence, operational projections.
 
 Forbidden: full historical ingestion, combination cubes, KEEP, live capital, exchange ingest.
 
