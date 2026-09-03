@@ -27,7 +27,23 @@ Two contracts would have forced a redesign. They are corrected in this change an
 
 ## How each capability attaches later
 
-See the table in-repo. Capabilities 1–15 attach as new tables/rows using existing identities, two clocks, and append-only facts.
+| # | Capability | How the current foundation supports it | Blocker removed / still open |
+| --- | --- | --- | --- |
+| 1 | World / external conditions | Schema `world` exists. Later: versioned condition_definition + condition_observation with event_time + knowledge_time + source. No per-disaster tables. | Open table, not a redesign. |
+| 2 | Shock → path → condition → market response | Later graph of typed links (condition → condition / market / asset) using stable ids. Market responses reuse `market.*` facts. | Do not store paths as columns on bars. |
+| 3 | Scenario / counterfactual experiments | `experiment_run` + `dataset_snapshot` + `counterfactual_outcome` already isolate a cohort. Scenarios become an experiment kind with assumed shocks, not overwritten history. | Do not reuse decision_event as a scenario. |
+| 4 | Portfolio exposure / impact | Schema `portfolio` reserved. Holdings are identities + weights as-of knowledge_time. Impact joins scenario output to holdings. | Asset identity now class-scoped. |
+| 5 | Prediction → outcome → error → validation | Schema `prediction` reserved. Separate rows: claim, mature window, observed outcome, error, validation_stage. Outcome is market/world truth, never the claim row mutated. | Do not put predictions in `feature.observation`. |
+| 6 | Uncertainty / confidence | Prediction row carries uncertainty + epistemic_status. Numeric value may be null when status is not a number. | Feature values stay numeric; predictions must not. |
+| 7 | Model disagreement | Multiple claims can share target/horizon and differ by model_id / source. Disagreement is derived, not a single blended cell that erases rivals. | Need future model identity table; not required to persist now. |
+| 8 | Reliability ≠ prediction value | Reliability is a rating object built from evidence dimensions. Ranking snapshot remains a dated projection of one scoring model. | Never write reliability onto the prediction value column. |
+| 9 | Multi-factor ranking | Ranking snapshot already keys relationship × stage × scoring_model_version × as_of. Dimension breakdowns attach as child rows later. | Single `score` is a projection, not the dimension store. |
+| 10 | Decay / invalidation / current relevance | Evidence direction now includes `invalidated` and `decayed`. Current relevance lives in rebuildable `analytics` / `ops` projections. | Historical evidence rows stay append-only. |
+| 11 | Experiment isolation and reset | Reset = new `experiment_run` + new snapshot/cohort label. `status` may be abandoned. DELETE of raw/market/feature facts is forbidden. | No erase API will be added. |
+| 12 | Negative knowledge | `contradicts`, `inconclusive`, `invalidated`, failed trials, SKIP/WAIT counterfactuals. Insufficient evidence is a valid result. | Do not delete failed runs. |
+| 13 | PIT reconstruction at T | Facts expose event_time + knowledge_time (Phase 2) or as_of_time (projections). Query: knowledge_time <= T. Definitions are versioned. | Later world/prediction rows must use the same two clocks. |
+| 14 | Reproducibility | Snapshot + feature/relationship versions + parameter_set + experiment code_commit/config_hash + raw→canon lineage. | Model/code commit must be stored on the experiment when predictions exist. |
+| 15 | Multi-market expansion | Venue + asset_class + instrument.kind (spot today; future/option/swap later). New market-fact tables per family (trades, funding, options chain) rather than widening OHLCV. | Quote asset is nullable so non-spot contracts can exist later. |
 
 ## What this change does not do
 
