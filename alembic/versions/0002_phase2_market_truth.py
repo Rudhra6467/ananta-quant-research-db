@@ -16,6 +16,7 @@ branch_labels = None
 depends_on = None
 
 SQL = Path(__file__).resolve().parents[2] / "sql" / "002_phase2_market_truth.sql"
+CONTRACTS = Path(__file__).resolve().parents[2] / "sql" / "002b_foundation_contracts.sql"
 
 
 def upgrade() -> None:
@@ -23,6 +24,7 @@ def upgrade() -> None:
     if bind.dialect.name != "postgresql":
         return
     op.execute(SQL.read_text(encoding="utf-8"))
+    op.execute(CONTRACTS.read_text(encoding="utf-8"))
 
 
 def downgrade() -> None:
