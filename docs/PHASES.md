@@ -17,4 +17,6 @@ Phase 3 allowed: persist fixture experiment runs, trials, and append-only eviden
 
 Phase 3 forbidden: exchange ingest, ranking engine, paper, predictions, KEEP, live capital.
 
+Phase 0 / 1 / 2 / 3 still forbid full-history ingestion.
+
 Completion: `tests/test_phase3_evidence.py`.
