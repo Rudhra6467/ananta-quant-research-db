@@ -27,56 +27,13 @@ Live 5-minute evaluation may query only operational projections. It must not sca
 
 ## Current status
 
-Phase 0: schema foundation.  
-Phase 1: in-memory BTC 1h **fixture lifecycle** (`research_db/lifecycle`, `docs/PHASE1.md`).
+Phase 0–1: merged to `main` (`24b6e72`).  
+Phase 2–4: on `work` — fixture market truth, evidence, and request-driven observation engine. Constitution: `docs/DATABASE_CONSTITUTION.md`.
 
-Allowed now:
+Allowed now: schemas, deterministic fixture, requested RSI(12–17) observations, fixture evidence, operational projections.
 
-- schemas and identity stubs
-- deterministic fixture (not an exchange feed)
-- requested-feature observations only
-- append-only evidence and rank snapshots on the fixture
-- operational-table live decision on the fixture
-
-Forbidden:
-
-- full historical ingestion
-- combinatorial feature materialization
-- strategy enablement / KEEP
-- live capital
-- treating Ananta regime labels as ground truth
-
-See `docs/EMPIRICAL_MEMORY_ARCHITECTURE_V1.md`, `docs/PHASES.md`, and `docs/PHASE1.md`.
-
-## Layout
-
-```
-docs/                     architecture and phase gates
-research_db/models/        SQLAlchemy Phase 0 stubs
-research_db/lifecycle/     Phase 1 stdlib fixture engine
-alembic/                   migrations
-tests/                     contract + lifecycle tests
-```
+Forbidden: full historical ingestion, combination cubes, KEEP, live capital, exchange ingest.
 
 ```bash
 python -m pytest
 ```
-
-## Local bring-up (after Phase 0 approval to run Docker)
-
-```bash
-docker compose up -d
-python -m pip install -e ".[dev]"
-alembic upgrade head
-python -m pytest
-```
-
-Do not ingest a multi-year dataset in Phase 0.
-
-## Relationship to other repos
-
-| Repo | Role |
-| --- | --- |
-| `Rudhra6467/Ananta` | Trading system, execution, System Truth |
-| `Rudhra6467/ananta-decision-agent` | Interpretation, ranking, marks, proposals |
-| `Rudhra6467/ananta-quant-research-db` | Empirical memory and evidence substrate |
