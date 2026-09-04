@@ -31,4 +31,4 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 19 | Full crypto expansion | reserved |
 | 20 | Multi-market research databases | reserved |
 
-Phase 0–20 still forbid full-history production ingestion until an ingest phase is approved.
+Phase 0–20 still forbid full-history ingestion.
