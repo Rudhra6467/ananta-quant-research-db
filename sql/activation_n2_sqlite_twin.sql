@@ -9,3 +9,13 @@ CREATE TABLE IF NOT EXISTS ops__ingest_quality_report (
 CREATE TABLE IF NOT EXISTS ops__ingest_watermark (
   id TEXT PRIMARY KEY, instrument_code TEXT NOT NULL, source_code TEXT NOT NULL, last_unix INTEGER NOT NULL, UNIQUE (instrument_code, source_code)
 );
+CREATE TABLE IF NOT EXISTS ops__snapshot_bar (
+  id TEXT PRIMARY KEY, snapshot_code TEXT NOT NULL, run_code TEXT NOT NULL, instrument_code TEXT NOT NULL,
+  source_record_id TEXT NOT NULL, event_time TEXT NOT NULL, knowledge_time TEXT NOT NULL,
+  open REAL NOT NULL, high REAL NOT NULL, low REAL NOT NULL, close REAL NOT NULL, volume REAL NOT NULL,
+  checksum TEXT NOT NULL, UNIQUE (snapshot_code, source_record_id)
+);
+CREATE TABLE IF NOT EXISTS ops__snapshot_status (
+  id TEXT PRIMARY KEY, snapshot_code TEXT NOT NULL UNIQUE, run_code TEXT NOT NULL,
+  complete INTEGER NOT NULL, accepted INTEGER NOT NULL, notes TEXT NOT NULL
+);
