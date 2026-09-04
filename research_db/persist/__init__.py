@@ -16,6 +16,7 @@ from research_db.persist import paper as phase18_paper
 from research_db.persist import expansion as phase19_expansion
 from research_db.persist import ingest as activation_a
 from research_db.persist import lab as activation_b
+from research_db.persist import shift as activation_c
 
 phase4_observe.bind(FixtureStore)
 phase5_state.bind(FixtureStore)
@@ -34,6 +35,7 @@ phase18_paper.bind(FixtureStore)
 phase19_expansion.bind(FixtureStore)
 activation_a.bind(FixtureStore)
 activation_b.bind(FixtureStore)
+activation_c.bind(FixtureStore)
 
 
 def open_observation_store(path: str = ":memory:"):
@@ -121,6 +123,12 @@ def open_laboratory_store(path: str = ":memory:"):
     return store
 
 
+def open_shift_store(path: str = ":memory:"):
+    store = open_laboratory_store(path)
+    store.install_activation_c()
+    return store
+
+
 __all__ = [
     "FixtureStore",
     "LiveQueryDenied",
@@ -139,4 +147,5 @@ __all__ = [
     "open_closed_loop_store",
     "open_activation_store",
     "open_laboratory_store",
+    "open_shift_store",
 ]
