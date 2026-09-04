@@ -18,8 +18,8 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 6 | Empirical memory + hypothesis lifecycle | COMPLETE on `work` |
 | 7 | Quantitative empirical measurements | COMPLETE and frozen on `work` |
 | 8 | Grouping identity + temporal membership | implemented on `work` — fixture only |
-| 9 | Advanced analytical / feature layer | reserved — direction only |
-| 10 | Market state & regime deepening | reserved |
+| 9 | Advanced analytical / feature layer | implemented on `work` — fixture only |
+| 10 | Versioned regime definitions | implemented on `work` — fixture only |
 | 11 | Market shift / event intelligence | reserved |
 | 12 | Cross-asset / group / market relationships | reserved |
 | 13 | Event memory & analogues | reserved |
