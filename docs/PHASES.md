@@ -23,9 +23,9 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 11 | Event representation (onset/windows/PIT) | implemented on `work` — fixture annotation only |
 | 12 | Declared cross-subject links | implemented on `work` — no correlation engine |
 | 13 | Event analogue definition links | implemented on `work` — no similarity scores |
-| 14 | Historical memory compression | reserved |
-| 15 | Security & architecture review | reserved |
-| 16 | Agent database interface | reserved |
+| 14 | Memory tiers + summaries, raw retained | implemented on `work` |
+| 15 | Access/mutation policy | implemented on `work` |
+| 16 | Read-only query catalog | implemented on `work` — no agent runtime |
 | 17 | Agent integration | reserved |
 | 18 | Paper autonomy profiles | reserved |
 | 19 | Full crypto expansion | reserved |
