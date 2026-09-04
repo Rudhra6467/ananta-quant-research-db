@@ -1,6 +1,6 @@
 # Activation program (design only)
 
-Status: **not started**. Ingestion stays disabled until Gate A is approved.
+Status: Gate A design published in `docs/GATE_A_INGESTION_DESIGN.md`. **Not approved for implementation.** Ingestion stays disabled.
 
 The numbered roadmap is complete. Do not add Phase 21+.
 
@@ -22,6 +22,7 @@ Define, do not implement:
 - Cost and rate-limit policy.
 
 Keep `INGESTION_ENABLED=false` until this design is accepted in writing.
+Design text: `docs/GATE_A_INGESTION_DESIGN.md`.
 
 ### Gate B — Real crypto laboratory
 
