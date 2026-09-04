@@ -6,7 +6,44 @@ The product is an empirical intelligence platform — a universal financial-worl
 
 ## Core flow
 
-See locked architecture diagrams in-repo. Meaning of truth is unchanged.
+```text
+MARKET TRUTH                    WORLD / EVENTS
+     |                                |
+Canonical Facts              Events / Shocks
+     |                                |
+     +--------------+-----------------+
+                    v
+              OBSERVATIONS
+                    |
+     +--------------+--------------+
+  Features        State      Relationships
+     |              |              |
+     +--------------+--------------+
+                    v
+              Regime / Memory
+                    |
+           +--------+--------+
+      Hypotheses         Similarity
+           |
+         Models
+           |
+      Predictions
+           |
+       Decisions
+           |
+        Outcomes
+           |
+       Validation
+           |
+        Learning
+```
+
+Cross-cutting dimensions (apply everywhere they are applicable):
+
+```text
+TIME · SOURCE · PROVENANCE · LINEAGE · CONTEXT · UNCERTAINTY
+GROUP / HIERARCHY · COHORT · EXPERIMENT · SNAPSHOT · REPRODUCIBILITY
+```
 
 ## Constitutional principle
 
@@ -19,23 +56,85 @@ Lock **semantics and invariants**. Do not permanently lock exact physical tables
 ## Five constitutional pillars
 
 ### 1. Temporal truth
-`event_time ≠ knowledge_time`. Reconstruct what was knowable at T. Lookahead leakage is forbidden.
+
+Where applicable, knowledge-bearing objects distinguish:
+
+`event_time != knowledge_time`
+
+Ananta must reconstruct: **What was knowable at timestamp T?** Lookahead leakage is forbidden.
 
 ### 2. Provenance and lineage
-Generic provenance graph contract (`ops.lineage_edge`). Full graph later; contract locked.
+
+Snapshot/run lineage is necessary but not sufficient. Ananta will support a **generic provenance graph** (reserved abstraction: `ops.lineage_edge` / provenance graph), not a feature-only DAG.
+
+Eventually connectable:
+
+```text
+raw -> canonical -> feature -> state -> regime -> similarity -> relationship/hypothesis
+    -> model -> prediction -> decision -> outcome -> validation
+```
+
+and:
+
+```text
+world event -> shock -> transmission path -> intermediate condition
+    -> market state -> prediction -> portfolio impact
+```
+
+Preserve parent/child identity, transformation/version, run, dataset snapshot, source, and relevant timestamps. Full graph implementation is a later phase; the **contract is locked now**.
 
 ### 3. Hierarchical / group reasoning
-Time-dependent many-to-many membership. No group×asset×timeframe×regime cube.
+
+First-class grouping is part of market representation (not UI-only):
+
+```text
+Market -> asset class -> sector/category -> group -> asset -> instrument
+```
+
+Many-to-many membership, effective/expiry times, historical reconstruction of membership, group-level state/regime/relationships/cohorts, aggregation and drill-down — reserved where not yet built. Group classification is **time-dependent knowledge**, not an eternal fact. No group x asset x timeframe x regime Cartesian cube. Same ontology across Crypto -> US -> Canada -> India -> Commodities -> FX.
 
 ### 4. Conditional empirical knowledge
-No implicit “RSI(14) predicts returns.” Evidence is conditional. Selective materialization only.
+
+Forbidden as an implicit claim: "RSI(14) predicts returns."
+
+Required form: evidence conditioned on instrument, timeframe, regime, volatility/liquidity/structure, cross-asset state, world conditions, event proximity, holding period, strategy, experiment cohort — via **predicates, dimensions, and cohort definitions**, with selective materialization only. No unconditional empirical cube.
 
 ### 5. Truth vs interpretation
-MARKET FACT → DERIVED OBSERVATION → STATE → INTERPRETATION → PREDICTION → OUTCOME must never collapse.
+
+Never collapse:
+
+```text
+MARKET FACT -> DERIVED OBSERVATION -> STATE -> INTERPRETATION -> PREDICTION -> OUTCOME
+```
+
+What **happened** must remain separable from what the system **believed**.
 
 ## Locked invariants
 
-Live path reads only bounded `ops.current_*`. `INGESTION_ENABLED` remains false until an explicitly approved production-ingest phase. Negative knowledge is permanent. Reset is a new cohort, never a delete.
+| Invariant | Rule |
+| --- | --- |
+| Prediction | Prediction value != uncertainty != reliability != ranking |
+| Distributions | Future predictions support point, parametric, empirical, quantile, conformal forms — not fixed q05-q95 columns as the only model |
+| Uncertainty vocabulary | UNKNOWN, INSUFFICIENT_EVIDENCE, HIGH_UNCERTAINTY, OUT_OF_DISTRIBUTION, MODEL_DISAGREEMENT — not forced into a single number |
+| Negative knowledge | Failed, contradicted, invalidated, decayed, inconclusive results are permanent; never silently deleted |
+| Reset | New experiment/cohort/run/snapshot — never erase history or failed experiments |
+| Market facts | `market.ohlcv_bar` is one family; trades, quotes, books, funding, OI, liquidations are additional market-truth families later |
+| Derived vs raw | Correlation, PCA, entropy, depth imbalance, VPIN-like measures are derived — not stored as raw OHLCV |
+| Cross-asset | Derived state snapshots only; never widen bar rows into a multi-asset cube |
+| World/scenarios | REALIZED HISTORY != HISTORICAL REPLAY != COUNTERFACTUAL != SYNTHETIC SIMULATION |
+| Live path | Reads only bounded `ops.current_*` projections |
+| Ingest gate | `INGESTION_ENABLED` remains false until an explicitly approved production-ingest phase |
+| Expandability | One market ontology instantiated per market — never throw away and redesign per geography |
+
+## Reserved schemas / abstractions (documented, not fully implemented)
+
+- `world`, `prediction`, `portfolio` (already reserved)
+- `ops.lineage_edge` / provenance graph (contract only)
+- Group identity + membership relationships (implemented as fixture identity/membership; aggregation still reserved)
+- Conditional predicate / cohort definitions (contract only)
+- Feature stability/decay measurements as evidence (contract only)
+- Cross-asset derived state families (contract only)
+- Scenario path identity with snapshot, assumptions, seed, generator (contract only)
 
 ## Physical store
 
@@ -43,11 +142,15 @@ One PostgreSQL 16 + TimescaleDB instance. Logical domains are schemas.
 
 ## Phase posture
 
-Phases 0–20 are represented on the fixture laboratory. See `docs/CHECKPOINT_P0_P20.md`.
+Phases 0-4: fixture-only foundation (architecture, lifecycle proof, market truth, evidence, observation engine).
+
+Phases 5-20: fixture-architecture representations on `work`. Live path remains `ops.current_*` only unless an activation gate is approved.
+
+Production ingest, ranking, predictions, scenarios, venue paper, 10-asset campaign, full microstructure, grouping aggregation engines, ML discovery, Agent runtime, and multi-market databases remain off until the matching activation gate.
 
 ## Fixture checkpoint (locked 2026-09-04)
 
-Commit `0871b49` is the Phase 0–20 **fixture-architecture completion checkpoint**.
+Commit `0871b49` is the Phase 0-20 **fixture-architecture completion checkpoint**.
 
 A roadmap phase represented and tested on the fixture is **not** equivalent to that capability being scientifically validated on real market data.
 
