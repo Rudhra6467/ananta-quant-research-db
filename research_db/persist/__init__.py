@@ -3,11 +3,13 @@ from research_db.persist import observe as phase4_observe
 from research_db.persist import state as phase5_state
 from research_db.persist import hypothesis as phase6_hypothesis
 from research_db.persist import measure as phase7_measure
+from research_db.persist import group as phase8_group
 
 phase4_observe.bind(FixtureStore)
 phase5_state.bind(FixtureStore)
 phase6_hypothesis.bind(FixtureStore)
 phase7_measure.bind(FixtureStore)
+phase8_group.bind(FixtureStore)
 
 
 def open_observation_store(path: str = ":memory:"):
@@ -35,6 +37,12 @@ def open_measurement_store(path: str = ":memory:"):
     return store
 
 
+def open_group_store(path: str = ":memory:"):
+    store = open_measurement_store(path)
+    store.install_phase8()
+    return store
+
+
 __all__ = [
     "FixtureStore",
     "LiveQueryDenied",
@@ -44,4 +52,5 @@ __all__ = [
     "open_state_store",
     "open_hypothesis_store",
     "open_measurement_store",
+    "open_group_store",
 ]
