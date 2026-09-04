@@ -59,7 +59,7 @@ Lock **semantics and invariants**. Do not permanently lock exact physical tables
 
 Where applicable, knowledge-bearing objects distinguish:
 
-`event_time != knowledge_time`
+`event_time ≠ knowledge_time`
 
 Ananta must reconstruct: **What was knowable at timestamp T?** Lookahead leakage is forbidden.
 
@@ -113,7 +113,7 @@ What **happened** must remain separable from what the system **believed**.
 
 | Invariant | Rule |
 | --- | --- |
-| Prediction | Prediction value != uncertainty != reliability != ranking |
+| Prediction | Prediction value ≠ uncertainty ≠ reliability ≠ ranking |
 | Distributions | Future predictions support point, parametric, empirical, quantile, conformal forms — not fixed q05-q95 columns as the only model |
 | Uncertainty vocabulary | UNKNOWN, INSUFFICIENT_EVIDENCE, HIGH_UNCERTAINTY, OUT_OF_DISTRIBUTION, MODEL_DISAGREEMENT — not forced into a single number |
 | Negative knowledge | Failed, contradicted, invalidated, decayed, inconclusive results are permanent; never silently deleted |
@@ -121,7 +121,7 @@ What **happened** must remain separable from what the system **believed**.
 | Market facts | `market.ohlcv_bar` is one family; trades, quotes, books, funding, OI, liquidations are additional market-truth families later |
 | Derived vs raw | Correlation, PCA, entropy, depth imbalance, VPIN-like measures are derived — not stored as raw OHLCV |
 | Cross-asset | Derived state snapshots only; never widen bar rows into a multi-asset cube |
-| World/scenarios | REALIZED HISTORY != HISTORICAL REPLAY != COUNTERFACTUAL != SYNTHETIC SIMULATION |
+| World/scenarios | REALIZED HISTORY ≠ HISTORICAL REPLAY ≠ COUNTERFACTUAL ≠ SYNTHETIC SIMULATION |
 | Live path | Reads only bounded `ops.current_*` projections |
 | Ingest gate | `INGESTION_ENABLED` remains false until an explicitly approved production-ingest phase |
 | Expandability | One market ontology instantiated per market — never throw away and redesign per geography |
