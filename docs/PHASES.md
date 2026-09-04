@@ -31,4 +31,6 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 19 | Full crypto expansion | reserved |
 | 20 | Multi-market research databases | reserved |
 
+Phase 5 Forbidden remains: exchange ingest, ranking, predictions, scenarios, paper, 10-asset campaign, grouping engine beyond identity/membership, ML discovery.
+
 Phase 0–20 still forbid full-history ingestion.
