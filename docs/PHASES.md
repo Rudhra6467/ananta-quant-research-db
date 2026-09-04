@@ -20,9 +20,9 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 8 | Grouping identity + temporal membership | implemented on `work` — fixture only |
 | 9 | Advanced analytical / feature layer | implemented on `work` — fixture only |
 | 10 | Versioned regime definitions | implemented on `work` — fixture only |
-| 11 | Market shift / event intelligence | reserved |
-| 12 | Cross-asset / group / market relationships | reserved |
-| 13 | Event memory & analogues | reserved |
+| 11 | Event representation (onset/windows/PIT) | implemented on `work` — fixture annotation only |
+| 12 | Declared cross-subject links | implemented on `work` — no correlation engine |
+| 13 | Event analogue definition links | implemented on `work` — no similarity scores |
 | 14 | Historical memory compression | reserved |
 | 15 | Security & architecture review | reserved |
 | 16 | Agent database interface | reserved |
