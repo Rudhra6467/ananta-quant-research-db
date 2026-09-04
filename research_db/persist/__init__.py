@@ -20,6 +20,7 @@ from research_db.persist import shift as activation_c
 from research_db.persist import agentd as activation_d
 from research_db.persist import papere as activation_e
 from research_db.persist import scaleout as activation_f
+from research_db.persist import n2 as activation_n2
 
 phase4_observe.bind(FixtureStore)
 phase5_state.bind(FixtureStore)
@@ -42,6 +43,7 @@ activation_c.bind(FixtureStore)
 activation_d.bind(FixtureStore)
 activation_e.bind(FixtureStore)
 activation_f.bind(FixtureStore)
+activation_n2.bind(FixtureStore)
 
 
 def open_observation_store(path: str = ":memory:"):
@@ -153,6 +155,12 @@ def open_scaleout_store(path: str = ":memory:"):
     return store
 
 
+def open_n2_store(path: str = ":memory:"):
+    store = open_scaleout_store(path)
+    store.install_activation_n2()
+    return store
+
+
 __all__ = [
     "FixtureStore",
     "LiveQueryDenied",
@@ -175,4 +183,5 @@ __all__ = [
     "open_agent_catalog_store",
     "open_paper_session_store",
     "open_scaleout_store",
+    "open_n2_store",
 ]
