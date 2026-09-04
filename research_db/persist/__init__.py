@@ -18,6 +18,7 @@ from research_db.persist import ingest as activation_a
 from research_db.persist import lab as activation_b
 from research_db.persist import shift as activation_c
 from research_db.persist import agentd as activation_d
+from research_db.persist import papere as activation_e
 
 phase4_observe.bind(FixtureStore)
 phase5_state.bind(FixtureStore)
@@ -38,6 +39,7 @@ activation_a.bind(FixtureStore)
 activation_b.bind(FixtureStore)
 activation_c.bind(FixtureStore)
 activation_d.bind(FixtureStore)
+activation_e.bind(FixtureStore)
 
 
 def open_observation_store(path: str = ":memory:"):
@@ -137,6 +139,12 @@ def open_agent_catalog_store(path: str = ":memory:"):
     return store
 
 
+def open_paper_session_store(path: str = ":memory:"):
+    store = open_agent_catalog_store(path)
+    store.install_activation_e()
+    return store
+
+
 __all__ = [
     "FixtureStore",
     "LiveQueryDenied",
@@ -157,4 +165,5 @@ __all__ = [
     "open_laboratory_store",
     "open_shift_store",
     "open_agent_catalog_store",
+    "open_paper_session_store",
 ]
