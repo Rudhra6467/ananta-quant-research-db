@@ -1,10 +1,14 @@
 # Implementation phases
 
+**FROZEN CHECKPOINT:** `0871b49` on `work` (2026-09-04). Phases 0–20 are fixture-architecture complete.
+Do not invent Phase 21+. Next work is `docs/ACTIVATION_PROGRAM.md` (design-only until each gate is approved).
+Fixture representation ≠ scientific validation on real data.
+
 Constitution **locked 2026-09-03** (see `DATABASE_CONSTITUTION.md`, `ARCHITECTURE_LOCK_V2.md`).
 Roadmap homes after Phase 5: `docs/ROADMAP_RECONCILIATION.md`.
 Master brief: `docs/MASTER_BLUEPRINT.md`.
-
-No phase starts full-market ingestion. A phase is complete only after design, tests, and the completion gate.
+Activation: `docs/ACTIVATION_PROGRAM.md`.
+Checkpoint: `docs/CHECKPOINT_P0_P20.md`.
 
 | Phase | Name | Status |
 | --- | --- | --- |
