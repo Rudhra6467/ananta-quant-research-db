@@ -1,2 +1,3 @@
-from research_db.shift.engine import ShiftDenied, ShiftReview
-__all__ = ["ShiftDenied", "ShiftReview"]
+from research_db.shift.engine import ShiftDenied, ShiftRegistry, ShiftReview, fixture_shift_demo
+
+__all__ = ["ShiftDenied", "ShiftRegistry", "ShiftReview", "fixture_shift_demo"]
