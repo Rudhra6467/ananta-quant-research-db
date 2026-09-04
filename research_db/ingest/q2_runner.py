@@ -8,23 +8,33 @@ from research_db.ingest.trade_agg import Q2_END_UNIX, Q2_START_UNIX, aggregate_t
 ENDPOINT = "https://api.kraken.com/0/public/Trades"
 PAIRS = ["ADAUSD", "LINKUSD", "AVAXUSD", "LTCUSD", "BCHUSD", "XDGUSD", "XRPUSD", "SOLUSD", "ETHUSD", "XBTUSD"]
 EXPECTED_HOURS = 2184
-def fetch_page(pair: str, since):
+def fetch_page(pair: str, since, retries: int = 8):
     q = urllib.parse.urlencode({"pair": pair, "since": since})
     req = urllib.request.Request(f"{ENDPOINT}?{q}", headers={"User-Agent": "ananta-n27-q2"})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        data = json.loads(resp.read().decode())
-    if data.get("error"):
-        raise RuntimeError(str(data["error"]))
-    result = data["result"]
-    last = result.get("last")
-    rows = next(v for k, v in result.items() if k != "last")
-    return rows, last
+    delay = 3.0
+    last_err = None
+    for _ in range(retries):
+        with urllib.request.urlopen(req, timeout=30) as resp:
+            data = json.loads(resp.read().decode())
+        err = data.get("error") or []
+        if not err:
+            result = data["result"]
+            last = result.get("last")
+            rows = next(v for k, v in result.items() if k != "last")
+            return rows, last
+        last_err = err
+        if any("Too many requests" in str(e) for e in err):
+            time.sleep(delay)
+            delay = min(delay * 1.7, 30.0)
+            continue
+        raise RuntimeError(str(err))
+    raise RuntimeError(str(last_err))
 def open_db(db: Path) -> sqlite3.Connection:
     conn = sqlite3.connect(db)
     conn.execute("CREATE TABLE IF NOT EXISTS watermark(pair TEXT PRIMARY KEY, since TEXT, pages INTEGER, last_ts REAL)")
     conn.execute("CREATE TABLE IF NOT EXISTS bars(source_code TEXT, source_record_id TEXT PRIMARY KEY, instrument TEXT, event_unix INTEGER, open REAL, high REAL, low REAL, close REAL, volume REAL, trades INTEGER)")
     return conn
-def run_pair(pair: str, db: Path, sleep_s: float = 0.35, max_pages: int | None = None) -> dict:
+def run_pair(pair: str, db: Path, sleep_s: float = 1.2, max_pages: int | None = None) -> dict:
     conn = open_db(db)
     wm = conn.execute("SELECT since, pages, last_ts FROM watermark WHERE pair=?", (pair,)).fetchone()
     since = wm[0] if wm else str(Q2_START_UNIX)
@@ -49,6 +59,7 @@ def run_pair(pair: str, db: Path, sleep_s: float = 0.35, max_pages: int | None =
         since = str(int(last_ts) + 1)
         conn.execute("INSERT INTO watermark(pair,since,pages,last_ts) VALUES(?,?,?,?) ON CONFLICT(pair) DO UPDATE SET since=excluded.since, pages=excluded.pages, last_ts=excluded.last_ts", (pair, since, pages, last_ts))
         conn.commit()
+        print({"pair": pair, "pages": pages, "last_ts": last_ts}, flush=True)
         if last_ts >= Q2_END_UNIX - 1:
             done = True
             break
