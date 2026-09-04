@@ -14,8 +14,8 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 4 | Feature observation engine | merged to `main` |
 | — | Architecture lock v2 | done on `main` |
 | 5 | Current state / regime / bounded ops projection | accepted on `work` (`4e8e427`) |
-| 6 | Empirical memory + hypothesis lifecycle | implemented on `work` — fixture only |
-| 7 | Quantitative empirical measurements | reserved |
+| 6 | Empirical memory + hypothesis lifecycle | COMPLETE on `work` |
+| 7 | Quantitative empirical measurements | design only — pending review |
 | 8 | Grouping / hierarchy | reserved |
 | 9 | Conditional / cohort predicates | reserved |
 | 10 | Cross-asset derived state | reserved |
