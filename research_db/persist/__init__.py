@@ -11,6 +11,9 @@ from research_db.persist import relate as phase12_relate
 from research_db.persist import memorytier as phase14_memory
 from research_db.persist import security as phase15_security
 from research_db.persist import iface as phase16_iface
+from research_db.persist import agent as phase17_agent
+from research_db.persist import paper as phase18_paper
+from research_db.persist import expansion as phase19_expansion
 
 phase4_observe.bind(FixtureStore)
 phase5_state.bind(FixtureStore)
@@ -24,6 +27,9 @@ phase12_relate.bind(FixtureStore)
 phase14_memory.bind(FixtureStore)
 phase15_security.bind(FixtureStore)
 phase16_iface.bind(FixtureStore)
+phase17_agent.bind(FixtureStore)
+phase18_paper.bind(FixtureStore)
+phase19_expansion.bind(FixtureStore)
 
 
 def open_observation_store(path: str = ":memory:"):
@@ -90,6 +96,15 @@ def open_governance_store(path: str = ":memory:"):
     return store
 
 
+def open_closed_loop_store(path: str = ":memory:"):
+    store = open_governance_store(path)
+    store.install_phase17()
+    store.install_phase18()
+    store.install_phase19()
+    store.install_phase20()
+    return store
+
+
 __all__ = [
     "FixtureStore",
     "LiveQueryDenied",
@@ -105,4 +120,5 @@ __all__ = [
     "open_event_store",
     "open_relate_store",
     "open_governance_store",
+    "open_closed_loop_store",
 ]

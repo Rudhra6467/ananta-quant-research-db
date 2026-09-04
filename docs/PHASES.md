@@ -26,10 +26,10 @@ No phase starts full-market ingestion. A phase is complete only after design, te
 | 14 | Memory tiers + summaries, raw retained | implemented on `work` |
 | 15 | Access/mutation policy | implemented on `work` |
 | 16 | Read-only query catalog | implemented on `work` — no agent runtime |
-| 17 | Agent integration | reserved |
-| 18 | Paper autonomy profiles | reserved |
-| 19 | Full crypto expansion | reserved |
-| 20 | Multi-market research databases | reserved |
+| 17 | Catalog-only agent consult log | implemented on `work` — no mutation |
+| 18 | Paper profile ledger, zero capital | implemented on `work` |
+| 19 | Universe plan registry | implemented on `work` — not ingested |
+| 20 | Market DB plan registry | implemented on `work` — not created |
 
 Phase 5 Forbidden remains: exchange ingest, ranking, predictions, scenarios, paper, 10-asset campaign, grouping engine beyond identity/membership, ML discovery.
 
