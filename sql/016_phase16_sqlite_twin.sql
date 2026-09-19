@@ -1,0 +1,3 @@
+CREATE TABLE IF NOT EXISTS interface__query_catalog (
+  id TEXT PRIMARY KEY, name TEXT NOT NULL UNIQUE, mutation INTEGER NOT NULL
+);

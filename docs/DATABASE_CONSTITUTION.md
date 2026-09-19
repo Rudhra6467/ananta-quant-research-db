@@ -8,33 +8,33 @@ The product is an empirical intelligence platform — a universal financial-worl
 
 ```text
 MARKET TRUTH                    WORLD / EVENTS
-     │                                │
+     |                                |
 Canonical Facts              Events / Shocks
-     │                                │
-     └──────────────┬─────────────────┘
-                    ▼
+     |                                |
+     +--------------+-----------------+
+                    v
               OBSERVATIONS
-                    │
-     ┌──────────────┼──────────────┐
+                    |
+     +--------------+--------------+
   Features        State      Relationships
-     │              │              │
-     └──────────────┼──────────────┘
-                    ▼
+     |              |              |
+     +--------------+--------------+
+                    v
               Regime / Memory
-                    │
-           ┌────────┴────────┐
+                    |
+           +--------+--------+
       Hypotheses         Similarity
-           │
+           |
          Models
-           │
+           |
       Predictions
-           │
+           |
        Decisions
-           │
+           |
         Outcomes
-           │
+           |
        Validation
-           │
+           |
         Learning
 ```
 
@@ -70,15 +70,15 @@ Snapshot/run lineage is necessary but not sufficient. Ananta will support a **ge
 Eventually connectable:
 
 ```text
-raw → canonical → feature → state → regime → similarity → relationship/hypothesis
-    → model → prediction → decision → outcome → validation
+raw -> canonical -> feature -> state -> regime -> similarity -> relationship/hypothesis
+    -> model -> prediction -> decision -> outcome -> validation
 ```
 
 and:
 
 ```text
-world event → shock → transmission path → intermediate condition
-    → market state → prediction → portfolio impact
+world event -> shock -> transmission path -> intermediate condition
+    -> market state -> prediction -> portfolio impact
 ```
 
 Preserve parent/child identity, transformation/version, run, dataset snapshot, source, and relevant timestamps. Full graph implementation is a later phase; the **contract is locked now**.
@@ -88,14 +88,14 @@ Preserve parent/child identity, transformation/version, run, dataset snapshot, s
 First-class grouping is part of market representation (not UI-only):
 
 ```text
-Market → asset class → sector/category → group → asset → instrument
+Market -> asset class -> sector/category -> group -> asset -> instrument
 ```
 
-Many-to-many membership, effective/expiry times, historical reconstruction of membership, group-level state/regime/relationships/cohorts, aggregation and drill-down — all reserved. Group classification is **time-dependent knowledge**, not an eternal fact. No group×asset×timeframe×regime Cartesian cube. Same ontology across Crypto → US → Canada → India → Commodities → FX.
+Many-to-many membership, effective/expiry times, historical reconstruction of membership, group-level state/regime/relationships/cohorts, aggregation and drill-down — reserved where not yet built. Group classification is **time-dependent knowledge**, not an eternal fact. No group x asset x timeframe x regime Cartesian cube. Same ontology across Crypto -> US -> Canada -> India -> Commodities -> FX.
 
 ### 4. Conditional empirical knowledge
 
-Forbidden as an implicit claim: “RSI(14) predicts returns.”
+Forbidden as an implicit claim: "RSI(14) predicts returns."
 
 Required form: evidence conditioned on instrument, timeframe, regime, volatility/liquidity/structure, cross-asset state, world conditions, event proximity, holding period, strategy, experiment cohort — via **predicates, dimensions, and cohort definitions**, with selective materialization only. No unconditional empirical cube.
 
@@ -104,7 +104,7 @@ Required form: evidence conditioned on instrument, timeframe, regime, volatility
 Never collapse:
 
 ```text
-MARKET FACT → DERIVED OBSERVATION → STATE → INTERPRETATION → PREDICTION → OUTCOME
+MARKET FACT -> DERIVED OBSERVATION -> STATE -> INTERPRETATION -> PREDICTION -> OUTCOME
 ```
 
 What **happened** must remain separable from what the system **believed**.
@@ -114,7 +114,7 @@ What **happened** must remain separable from what the system **believed**.
 | Invariant | Rule |
 | --- | --- |
 | Prediction | Prediction value ≠ uncertainty ≠ reliability ≠ ranking |
-| Distributions | Future predictions support point, parametric, empirical, quantile, conformal forms — not fixed q05…q95 columns as the only model |
+| Distributions | Future predictions support point, parametric, empirical, quantile, conformal forms — not fixed q05-q95 columns as the only model |
 | Uncertainty vocabulary | UNKNOWN, INSUFFICIENT_EVIDENCE, HIGH_UNCERTAINTY, OUT_OF_DISTRIBUTION, MODEL_DISAGREEMENT — not forced into a single number |
 | Negative knowledge | Failed, contradicted, invalidated, decayed, inconclusive results are permanent; never silently deleted |
 | Reset | New experiment/cohort/run/snapshot — never erase history or failed experiments |
@@ -130,7 +130,7 @@ What **happened** must remain separable from what the system **believed**.
 
 - `world`, `prediction`, `portfolio` (already reserved)
 - `ops.lineage_edge` / provenance graph (contract only)
-- Group identity + membership relationships (contract only)
+- Group identity + membership relationships (implemented as fixture identity/membership; aggregation still reserved)
 - Conditional predicate / cohort definitions (contract only)
 - Feature stability/decay measurements as evidence (contract only)
 - Cross-asset derived state families (contract only)
@@ -142,8 +142,21 @@ One PostgreSQL 16 + TimescaleDB instance. Logical domains are schemas.
 
 ## Phase posture
 
-Phases 0–4: fixture-only foundation (architecture, lifecycle proof, market truth, evidence, observation engine).
+Phases 0-4: fixture-only foundation (architecture, lifecycle proof, market truth, evidence, observation engine).
 
-Phase 5 (next implementation, still fixture-only): market truth → current features → current market state → current regime → bounded operational projection. Live path remains `ops.current_*` only.
+Phases 5-20: fixture-architecture representations on `work`. Live path remains `ops.current_*` only unless an activation gate is approved.
 
-Phase 5 does **not** implement production ingest, ranking, predictions, scenarios, paper trading, 10-asset campaign, full microstructure, grouping engine, or ML discovery.
+Production ingest, ranking, predictions, scenarios, venue paper, 10-asset campaign, full microstructure, grouping aggregation engines, ML discovery, Agent runtime, and multi-market databases remain off until the matching activation gate.
+
+## Fixture checkpoint (locked 2026-09-04)
+
+Commit `0871b49` is the Phase 0-20 **fixture-architecture completion checkpoint**.
+
+A roadmap phase represented and tested on the fixture is **not** equivalent to that capability being scientifically validated on real market data.
+
+- The fixture proves architecture and control behavior.
+- Real data must prove data integrity, statistical validity, reproducibility, computational behavior, and usefulness.
+
+No further fixture-only phase numbers will be invented to extend this list. Work after this checkpoint is an **activation program** and requires explicit approval before each transition.
+
+If an activation requirement conflicts with this constitution, stop and report the conflict. Do not rewrite the constitution to accommodate activation convenience.

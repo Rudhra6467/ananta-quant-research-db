@@ -8,6 +8,7 @@ SCHEMAS = (
     "world",
     "market",
     "feature",
+    "state",
     "research",
     "prediction",
     "portfolio",

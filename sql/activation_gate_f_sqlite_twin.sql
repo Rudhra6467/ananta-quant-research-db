@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS ops__scaleout_instrument_plan (
+  id TEXT PRIMARY KEY, code TEXT NOT NULL UNIQUE, venue TEXT NOT NULL, market TEXT NOT NULL, ingested INTEGER NOT NULL, fixture INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS ops__scaleout_world (
+  id TEXT PRIMARY KEY, code TEXT NOT NULL UNIQUE, isolated INTEGER NOT NULL
+);
+CREATE TABLE IF NOT EXISTS ops__scaleout_lineage (
+  id TEXT PRIMARY KEY, step TEXT NOT NULL UNIQUE, status TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS ops__production_checklist (
+  id TEXT PRIMARY KEY, item TEXT NOT NULL UNIQUE, state TEXT NOT NULL
+);

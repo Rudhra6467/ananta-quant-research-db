@@ -28,7 +28,7 @@ Live 5-minute evaluation may query only operational projections. It must not sca
 ## Current status
 
 Phase 0–1: merged to `main` (`24b6e72`).  
-Phase 2–4: on `work` — fixture market truth, evidence, and request-driven observation engine. Constitution: `docs/DATABASE_CONSTITUTION.md`.
+Phase 2–4: merged to `main`. Phase 5: current state/regime compiler on `work` (fixture only). Constitution: `docs/DATABASE_CONSTITUTION.md`, `docs/ARCHITECTURE_LOCK_V2.md`.
 
 Allowed now: schemas, deterministic fixture, requested RSI(12–17) observations, fixture evidence, operational projections.
 

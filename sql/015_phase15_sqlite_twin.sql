@@ -1,0 +1,6 @@
+CREATE TABLE IF NOT EXISTS ops__access_grant (
+  id TEXT PRIMARY KEY, role TEXT NOT NULL, surface TEXT NOT NULL, action TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS ops__access_forbid (
+  id TEXT PRIMARY KEY, role TEXT NOT NULL, surface TEXT NOT NULL, action TEXT NOT NULL
+);
